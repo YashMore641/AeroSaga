@@ -22,7 +22,7 @@ public class MissionStarter {
                         DroneMissionWorkflow.class,
                         WorkflowOptions.newBuilder()
                                 .setWorkflowId(
-                                        "mission-drone-001"
+                                        "mission-drone-002"
                                 )
                                 .setTaskQueue(
                                         DroneWorker.TASK_QUEUE
@@ -30,13 +30,16 @@ public class MissionStarter {
                                 .build()
                 );
 
-        String result =
-                workflow.executeMission("DRONE-001");
+        try {
+            String result =
+                    workflow.executeMission("DRONE-002");
 
-        System.out.println(
-                "Mission completed with status: " + result
-        );
+            System.out.println(
+                    "Mission result: " + result
+            );
 
-        service.shutdown();
+        } finally {
+            service.shutdown();
+        }
     }
 }

@@ -25,14 +25,39 @@ public class DroneMissionWorkflowImpl
 
         Workflow.getLogger(
                 DroneMissionWorkflowImpl.class
-        ).info("Starting mission for drone: " + droneId);
+        ).info("Mission started for " + droneId);
 
-        String result = activities.takeoff(droneId);
+        // Step 1: Takeoff
+        String takeoffStatus = activities.takeoff(droneId);
+        Workflow.getLogger(
+                DroneMissionWorkflowImpl.class
+        ).info("Status: " + takeoffStatus);
+
+        // Step 2: Navigate
+        String navigationStatus = activities.navigate(droneId);
+        Workflow.getLogger(
+                DroneMissionWorkflowImpl.class
+        ).info("Status: " + navigationStatus);
+
+        // Step 3: Deliver package
+        String deliveryStatus = activities.dropPackage(droneId);
+        Workflow.getLogger(
+                DroneMissionWorkflowImpl.class
+        ).info("Status: " + deliveryStatus);
+
+        // Step 4: Return to base
+        String returnStatus = activities.returnToBase(droneId);
+        Workflow.getLogger(
+                DroneMissionWorkflowImpl.class
+        ).info("Status: " + returnStatus);
+
+        String finalStatus =
+                "MISSION_COMPLETED: " + droneId;
 
         Workflow.getLogger(
                 DroneMissionWorkflowImpl.class
-        ).info("Mission status: " + result);
+        ).info(finalStatus);
 
-        return result;
+        return finalStatus;
     }
 }
